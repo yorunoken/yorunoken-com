@@ -2,6 +2,11 @@
 import { projects } from "@@/server/utils/projects";
 import { playlist } from "@@/server/utils/audio";
 
+const { $device } = useNuxtApp();
+
+const isDesktop = $device?.isDesktop ?? false;
+const snowCount = isDesktop ? 200 : 50;
+
 const glucose = ref("-");
 const glucoseColor = ref("");
 const visibleProjectsCount = ref(4);
@@ -40,7 +45,6 @@ function showLessProjects() { visibleProjectsCount.value = 4; }
 
 // --- Snowflakes ---
 function snowFlakes() {
-    const snowCount = 200;
     const snowContainer = document.getElementById("snow-container");
     if (!snowContainer) return;
     for (let i = 0; i < snowCount; i++) {
@@ -378,7 +382,7 @@ body {
 
 main {
     margin-top: 5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -516,7 +520,7 @@ main {
 .music-wrapper {
     position: fixed;
     top: 0;
-    width: 25%;
+    width: 400px;
     height: 160px;
     display: flex;
     justify-content: center;
@@ -710,6 +714,12 @@ main {
     list-style: none;
     padding: 0;
     margin: 0;
+    flex-wrap: wrap;
+    /* allow wrapping */
+    overflow-x: auto;
+    /* allow horizontal scroll if needed */
+    gap: 1rem;
+    max-width: 100%;
 }
 
 .social li {
@@ -718,6 +728,11 @@ main {
     gap: 0.7rem;
     cursor: pointer;
     transition: color 0.3s ease;
+
+    flex: 0 0 auto;
+    /* prevent shrinking too small */
+    min-width: 60px;
+    text-align: center;
 }
 
 .social a {
@@ -928,5 +943,97 @@ main {
     background-color: #b23434;
     outline: none;
     box-shadow: 0 0 6px #b23434;
+}
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        font-size: 14px;
+        background-size: 300% 300%;
+    }
+
+    main {
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+
+    .info-card,
+    .diabetes-section,
+    .projects-section {
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem 1rem;
+        margin: 1rem 0;
+        box-sizing: border-box;
+    }
+
+    .projects-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .social {
+        gap: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .social li {
+        min-width: 50px;
+        font-size: 0.85rem;
+    }
+
+    .music-wrapper {
+        height: 0px;
+    }
+
+    .music-handle {
+        display: none;
+    }
+
+    .music {
+        position: fixed;
+        bottom: 0px;
+        left: 0;
+        width: 100vw;
+        max-width: 100%;
+        border-radius: 0;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        background: rgba(250, 250, 250, 0.95);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1rem;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transform: translateY(0) !important;
+    }
+
+    .music .now-playing {
+        font-size: 1rem;
+        margin-bottom: 0;
+        color: #d43f3f;
+        font-weight: 700;
+        flex: 1;
+        text-align: left;
+        padding-left: 0.5rem;
+    }
+
+    .music .controlller {
+        gap: 1.5rem;
+    }
+
+    .music .controlller li {
+        font-size: 1.8rem;
+    }
+
+    .footer {
+        margin-top: 0rem;
+        font-size: 0.9rem;
+    }
 }
 </style>
