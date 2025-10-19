@@ -1,12 +1,34 @@
+import { serve } from "bun";
+import { RateLimiterMemory, RateLimiterRes } from "rate-limiter-flexible";
+
 import index from "./index.html";
 
-import { serve } from "bun";
+const rateLimiter = new RateLimiterMemory({
+    points: 20,
+    duration: 60,
+});
+
+function throttle(handler: (req: Request, server: Bun.Server<undefined>) => Response | Promise<Response>) {
+    return async (req: Request, server: Bun.Server<undefined>) => {
+        const ip = server.requestIP(req)?.address ?? "unknown";
+
+        try {
+            await rateLimiter.consume(ip);
+            return handler(req, server);
+        } catch (err) {
+            if (err instanceof Error && err instanceof RateLimiterRes) {
+                return new Response("Too Many Requests", { status: 429 });
+            }
+            return new Response("Internal Error", { status: 500 });
+        }
+    };
+}
 
 const PORT = process.env.PORT;
 const server = serve({
     routes: {
-        "/api/status": new Response("OK"),
-        "/profile-pic": async () => {
+        "/api/status": throttle(() => new Response("OK")),
+        "/profile-pic": throttle(async (req) => {
             const res = await fetch("https://api.lanyard.rest/v1/users/372343076578131968");
             const json = await res.json();
 
@@ -26,8 +48,8 @@ const server = serve({
                     "Cache-Control": "public, max-age=3600",
                 },
             });
-        },
-        "/bg": async (req) => {
+        }),
+        "/bg": throttle(async (req) => {
             const res = await fetch(`${process.env.NIGHTSCOUT_URL}/api/v1/entries.json?count=2`);
             const data = await res.json();
 
@@ -39,7 +61,7 @@ const server = serve({
                 }),
                 { headers: { "Content-Type": "application/json" } }
             );
-        },
+        }),
         "/*": index,
     },
     development: process.env.NODE_ENV !== "production" && {
