@@ -50,6 +50,21 @@ const server = serve({
                 },
             });
         }),
+        "/status": throttle(async () => {
+            const res = await fetch("https://api.lanyard.rest/v1/users/372343076578131968");
+            const json = await res.json();
+
+            const indicator = json.data.discord_status;
+            const status = json.data.activities?.find((x: { name: string }) => x.name === "Custom Status")?.state;
+
+            return new Response(
+                JSON.stringify({
+                    status,
+                    indicator,
+                }),
+                { headers: { "Content-Type": "application/json" } }
+            );
+        }),
         "/bg": throttle(async () => {
             const res = await fetch(`${process.env.NIGHTSCOUT_URL}/api/v1/entries.json?count=2`);
             const data = await res.json();

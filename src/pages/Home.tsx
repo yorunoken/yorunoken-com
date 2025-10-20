@@ -1,6 +1,9 @@
 import "../index.css";
 import { FaGithub, FaTwitter, FaDiscord, FaYoutube, FaExternalLinkAlt } from "react-icons/fa";
 import { SiOsu, SiBuymeacoffee } from "react-icons/si";
+import { useEffect, useState } from "react";
+
+type Status = "online" | "offline" | "dnd" | "idle";
 
 const projects = [
     {
@@ -65,24 +68,75 @@ const socials = [
     },
 ];
 
+const statusColors = {
+    online: "bg-green-500",
+    offline: "bg-gray-500",
+    dnd: "bg-red-500",
+    idle: "bg-yellow-500",
+};
+
+const statusLabels = {
+    online: "Online",
+    offline: "Offline",
+    dnd: "Do Not Disturb",
+    idle: "idle",
+};
+
 export default function Home() {
+    const [statusIndicator, setStatusIndicator] = useState<Status>("offline");
+    const [status, setStatus] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getStatus() {
+            const res = await fetch("/status");
+            if (!res.ok) {
+                return;
+            }
+
+            const data = await res.json();
+            setStatus(data.status);
+            setStatusIndicator(data.indicator);
+        }
+
+        getStatus();
+    }, []);
+
     return (
         <main className="flex items-center justify-center min-h-screen p-4 sm:p-6">
             <div className="bg-[#0a0a0a] p-5 sm:p-6 md:p-8 lg:p-12 rounded-lg shadow-xl max-w-4xl w-full text-white border border-gray-800">
                 <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12">
                     <div className="flex-1 w-full">
-                        {/* Mobile: Centered profile pic on top */}
-                        <div className="flex flex-col items-center text-center mb-6 lg:hidden">
-                            <img src="/profile-pic" alt="Profile Picture" className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover shadow-lg border-2 border-gray-800 mb-4" />
-                            <div className="mb-2">
-                                <h1 className="text-3xl sm:text-4xl font-bold mb-1">yorunoken</h1>
-                                <a href="mailto://me@yorunoken.com" className="text-gray-500 text-sm hover:underline">
+                        <div className="flex flex-col items-center text-center mb-6 lg:hidden px-4">
+                            <div className="relative mb-5 group/status">
+                                <img src="/profile-pic" alt="Profile Picture" className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-lg border-2 border-gray-800" />
+                                <div
+                                    className={`absolute bottom-1 right-1 w-5 h-5 sm:w-6 sm:h-6 ${statusColors[statusIndicator]} rounded-full border-3 border-[#0a0a0a]`}
+                                    title={statusLabels[statusIndicator]}
+                                ></div>
+
+                                {status && (
+                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                                        <div className="px-3 py-1 bg-gray-900 rounded-full border border-gray-700 flex items-center justify-start gap-2 cursor-pointer hover:border-gray-600 transition-all duration-300 shadow-md max-w-[160px] sm:max-w-[200px] overflow-hidden group-hover/status:max-w-full">
+                                            <div className="overflow-hidden transition-all duration-500 ease-in-out origin-left fade-out group-hover/status:[mask-image:none] flex items-center">
+                                                <span className="text-[11px] sm:text-xs text-gray-400 group-hover/status:text-gray-300 transition-colors whitespace-nowrap leading-none">{status}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
+                                <h1 className="text-2xl sm:text-3xl font-bold mb-1">yorunoken</h1>
+                                <a href="mailto:me@yorunoken.com" className="text-gray-500 text-sm hover:underline break-all">
                                     me@yorunoken.com
                                 </a>
                             </div>
-                            <p className="text-gray-500 text-base">full-stack developer</p>
-                            <p className="text-gray-500 text-base">insulin junkie</p>
-                            <p className="text-gray-500 text-base">weeb</p>
+
+                            <div className="flex flex-col gap-1 text-gray-500 text-sm sm:text-base">
+                                <p>full-stack developer</p>
+                                <p>insulin junkie</p>
+                                <p>weeb</p>
+                            </div>
                         </div>
 
                         <div className="hidden lg:flex text-left justify-between mb-2">
@@ -97,7 +151,19 @@ export default function Home() {
                                 <p className="text-gray-500 text-lg">insulin junkie</p>
                                 <p className="text-gray-500 text-lg">weeb</p>
                             </div>
-                            <img src="/profile-pic" alt="Profile Picture" className="w-48 h-48 xl:w-56 xl:h-56 rounded-full object-cover shadow-lg border-2 border-gray-800" />
+                            <div className="relative group/status">
+                                <img src="/profile-pic" alt="Profile Picture" className="w-48 h-48 xl:w-56 xl:h-56 rounded-full object-cover shadow-lg border-2 border-gray-800" />
+                                <div className={`absolute bottom-2 right-2 w-12 h-12 ${statusColors[statusIndicator]} rounded-full border-6 border-[#0a0a0a]`} title={statusLabels[statusIndicator]}></div>
+                                {status && (
+                                    <div className="absolute -top-3 -left-3">
+                                        <div className="px-3 py-1 bg-gray-900 rounded-2xl border border-gray-700 flex items-center gap-2 cursor-pointer hover:border-gray-600 transition-all duration-300 shadow-lg max-w-[180px] group-hover/status:max-w-full group-hover/status:xl:max-w-full">
+                                            <div className="overflow-hidden transition-all duration-500 ease-in-out origin-left fade-out group-hover/status:[mask-image:none] flex items-center">
+                                                <span className="text-xs xl:text-sm text-gray-400 group-hover/status:text-gray-300 transition-colors whitespace-nowrap">{status}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="mb-6">

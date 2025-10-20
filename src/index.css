@@ -16,3 +16,10 @@
         height: 100%;
     }
 }
+
+@layer components {
+    .fade-out {
+        -webkit-mask-image: linear-gradient(to right, black 85%, transparent);
+        mask-image: linear-gradient(to right, black 85%, transparent);
+    }
+}
