@@ -1,91 +1,28 @@
 import "../index.css";
-import { FaGithub, FaTwitter, FaDiscord, FaYoutube, FaExternalLinkAlt } from "react-icons/fa";
-import { SiOsu, SiBuymeacoffee } from "react-icons/si";
+
 import { useEffect, useState } from "react";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { projects, socials, statusColors, statusLabels, type Status } from "../utils";
+
 import Snowflakes from "../components/snowflakes";
-
-type Status = "online" | "offline" | "dnd" | "idle";
-
-const projects = [
-    {
-        title: "HanamiBot",
-        description: "A powerful Discord bot developed for osu!",
-        github: "https://github.com/yorunoken/HanamiBot",
-        website: "https://hanami.yorunoken.com",
-        tags: ["Discord", "osu!", "TypeScript"],
-    },
-    {
-        title: "YAUS",
-        description: "Yet another URL shortener.",
-        github: "https://github.com/yorunoken/YAUS",
-        website: "https://short.yorunoken.com",
-        tags: ["URL Shortener", "Web Service"],
-    },
-    {
-        title: "dotfiles",
-        description: "My dotfiles for my Arch Linux setup.",
-        github: "https://github.com/yorunoken/dotfiles",
-        tags: ["Linux", "Arch", "Configuration"],
-    },
-];
-
-const socials = [
-    {
-        title: "GitHub",
-        href: "https://github.com/yorunoken",
-        icon: FaGithub,
-        hoverColor: "hover:bg-[#24292e]",
-    },
-    {
-        title: "Twitter",
-        href: "https://twitter.com/_yorunoken",
-        icon: FaTwitter,
-        hoverColor: "hover:bg-[#1DA1F2]",
-    },
-    {
-        title: "Discord",
-        href: "https://discord.com/users/372343076578131968",
-        icon: FaDiscord,
-        hoverColor: "hover:bg-[#5865F2]",
-    },
-    {
-        title: "osu!",
-        href: "https://osu.ppy.sh/u/17279598",
-        icon: SiOsu,
-        hoverColor: "hover:bg-[#FF66AB]",
-    },
-    {
-        title: "YouTube",
-        href: "https://www.youtube.com/@yorunoken",
-        icon: FaYoutube,
-        hoverColor: "hover:bg-[#FF0000]",
-    },
-    {
-        title: "Buy Me a Coffee",
-        href: "https://buymeacoffee.com/yorunoken",
-        icon: SiBuymeacoffee,
-        hoverColor: "hover:bg-[#FFDD00]",
-        hoverTextColor: "hover:text-black",
-    },
-];
-
-const statusColors = {
-    online: "bg-green-500",
-    offline: "bg-gray-500",
-    dnd: "bg-red-500",
-    idle: "bg-yellow-500",
-};
-
-const statusLabels = {
-    online: "Online",
-    offline: "Offline",
-    dnd: "Do Not Disturb",
-    idle: "idle",
-};
+import Rain from "../components/rain";
+import Leaves from "../components/leaves";
 
 export default function Home() {
     const [statusIndicator, setStatusIndicator] = useState<Status>("offline");
     const [status, setStatus] = useState<string | null>(null);
+    const [weatherEffect, setWeatherEffect] = useState<"snow" | "rain" | "leaves">(() => {
+        const savedWeather = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("weatherEffect="))
+            ?.split("=")[1];
+        return (savedWeather as "snow" | "rain" | "leaves") ?? "snow";
+    });
+
+    function selectWeather(weather: "snow" | "rain" | "leaves") {
+        setWeatherEffect(weather);
+        document.cookie = `weatherEffect=${weather}; expires=0 path=/;`;
+    }
 
     useEffect(() => {
         async function getStatus() {
@@ -104,8 +41,33 @@ export default function Home() {
 
     return (
         <main className="flex items-center justify-center min-h-screen p-4 sm:p-6">
-            <div className="background"></div>
-            <Snowflakes />
+            <div
+                className="fixed inset-0 w-full h-full bg-center bg-no-repeat bg-cover brightness-50 blur-[5px] transition-all duration-700"
+                style={{
+                    backgroundImage: `url('${
+                        weatherEffect === "snow" ? "https://yorunoken.s-ul.eu/ixnhcPA8" : weatherEffect === "rain" ? "https://yorunoken.s-ul.eu/yyCyDMUB" : "https://yorunoken.s-ul.eu/XYdxk4kI"
+                    }')`,
+                }}
+            />
+            {weatherEffect === "snow" && <Snowflakes />}
+            {weatherEffect === "rain" && <Rain />}
+            {weatherEffect === "leaves" && <Leaves />}
+
+            <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-20 flex gap-1.5 sm:gap-2 bg-gray-900/90 p-1.5 sm:p-2 rounded-lg border border-gray-800 shadow-lg">
+                {["snow", "rain", "leaves"].map((weather) => (
+                    <button
+                        onClick={() => selectWeather(weather as "snow" | "rain" | "leaves")}
+                        className={`px-2 py-1.5 sm:px-3 sm:py-2 rounded text-base sm:text-lg transition-all ${
+                            weatherEffect === weather ? "bg-blue-600 text-white shadow-md" : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+                        }`}
+                        title={weather}
+                    >
+                        {weather === "snow" && "❄️"}
+                        {weather === "rain" && "🌧️"}
+                        {weather === "leaves" && "🍂"}
+                    </button>
+                ))}
+            </div>
             <div className="bg-[#0a0a0a]/90 z-10 p-5 sm:p-6 md:p-8 lg:p-12 rounded-lg shadow-xl max-w-4xl w-full text-white border border-gray-800">
                 <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12">
                     <div className="flex-1 w-full">
