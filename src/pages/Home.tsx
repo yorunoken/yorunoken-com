@@ -12,16 +12,13 @@ export default function Home() {
     const [statusIndicator, setStatusIndicator] = useState<Status>("offline");
     const [status, setStatus] = useState<string | null>(null);
     const [weatherEffect, setWeatherEffect] = useState<"snow" | "rain" | "leaves">(() => {
-        const savedWeather = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("weatherEffect="))
-            ?.split("=")[1];
+        const savedWeather = localStorage.getItem("weather");
         return (savedWeather as "snow" | "rain" | "leaves") ?? "snow";
     });
 
     function selectWeather(weather: "snow" | "rain" | "leaves") {
         setWeatherEffect(weather);
-        document.cookie = `weatherEffect=${weather}; expires=0 path=/;`;
+        localStorage.setItem("weather", weather);
     }
 
     useEffect(() => {
