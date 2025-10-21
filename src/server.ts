@@ -11,7 +11,6 @@ const rateLimiter = new RateLimiterMemory({
 function throttle(handler: (req: Request) => Response | Promise<Response>) {
     return async (req: Request) => {
         const ip = req.headers.get("x-forwarded-for") || "unknown";
-        console.log(ip);
 
         try {
             await rateLimiter.consume(ip);
