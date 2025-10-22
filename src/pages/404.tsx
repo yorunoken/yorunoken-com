@@ -1,9 +1,11 @@
+import Effects from "../components/effects";
 import "../index.css";
 
 export default function NotFound() {
     return (
-        <main className="flex items-center justify-center min-h-screen p-4">
-            <div className="bg-[#0a0a0a] p-6 md:p-8 lg:p-12 rounded-lg shadow-xl max-w-2xl w-full text-white border border-gray-800">
+        <main className="flex items-center justify-center min-h-screen p-4 sm:p-6">
+            <Effects />
+            <div className="bg-[#0a0a0a]/90 z-10 p-6 md:p-8 lg:p-12 rounded-lg shadow-xl max-w-2xl w-full text-white border border-gray-800">
                 <div className="text-center">
                     <h1 className="text-8xl md:text-9xl font-bold text-gray-300 mb-4">404</h1>
                     <h2 className="text-2xl md:text-3xl font-semibold text-gray-200 mb-4">page not found</h2>

@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { projects, socials, statusColors, statusLabels, type Status } from "../utils";
 
-import Snowflakes from "../components/snowflakes";
-import Rain from "../components/rain";
-import Leaves from "../components/leaves";
+import Effects from "../components/effects";
 
 export default function Home() {
     const [statusIndicator, setStatusIndicator] = useState<Status>("offline");
@@ -40,43 +38,7 @@ export default function Home() {
 
     return (
         <main className="flex items-center justify-center min-h-screen p-4 sm:p-6">
-            <div
-                className={`fixed inset-0 w-full h-full bg-center bg-no-repeat bg-cover brightness-50 blur-[5px] transition-opacity duration-700 ${weatherEffect === "snow" ? "opacity-100" : "opacity-0"}`}
-                style={{ backgroundImage: "url('https://yorunoken.s-ul.eu/ixnhcPA8')" }}
-            />
-            <div
-                className={`fixed inset-0 w-full h-full bg-center bg-no-repeat bg-cover brightness-50 blur-[5px] transition-opacity duration-700 ${weatherEffect === "rain" ? "opacity-100" : "opacity-0"}`}
-                style={{ backgroundImage: "url('https://yorunoken.s-ul.eu/yyCyDMUB')" }}
-            />
-            <div
-                className={`fixed inset-0 w-full h-full bg-center bg-no-repeat bg-cover brightness-50 blur-[5px] transition-opacity duration-700 ${weatherEffect === "leaves" ? "opacity-100" : "opacity-0"}`}
-                style={{ backgroundImage: "url('https://yorunoken.s-ul.eu/XYdxk4kI')" }}
-            />
-            <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "snow" ? "opacity-100" : "opacity-0"} pointer-events-none`}>
-                <Snowflakes />
-            </div>
-            <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "rain" ? "opacity-100" : "opacity-0"} pointer-events-none`}>
-                <Rain />
-            </div>
-            <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "leaves" ? "opacity-100" : "opacity-0"} pointer-events-none`}>
-                <Leaves />
-            </div>
-
-            <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-20 flex gap-1.5 sm:gap-2 bg-gray-900/90 p-1.5 sm:p-2 rounded-lg border border-gray-800 shadow-lg">
-                {["snow", "rain", "leaves"].map((weather) => (
-                    <button
-                        onClick={() => selectWeather(weather as "snow" | "rain" | "leaves")}
-                        className={`px-2 py-1.5 sm:px-3 sm:py-2 rounded text-base sm:text-lg transition-all ${
-                            weatherEffect === weather ? "bg-blue-600 text-white shadow-md" : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
-                        }`}
-                        title={weather}
-                    >
-                        {weather === "snow" && "❄️"}
-                        {weather === "rain" && "🌧️"}
-                        {weather === "leaves" && "🍂"}
-                    </button>
-                ))}
-            </div>
+            <Effects />
             <div className="bg-[#0a0a0a]/90 z-10 p-5 sm:p-6 md:p-8 lg:p-12 rounded-lg shadow-xl max-w-4xl w-full text-white border border-gray-800">
                 <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12">
                     <div className="flex-1 w-full">
