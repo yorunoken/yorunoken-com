@@ -1,9 +1,7 @@
-import { useState, useCallback, useMemo, useEffect, lazy, Suspense } from "react";
-
-// Lazy load effect components for better initial load performance
-const Snowflakes = lazy(() => import("../components/snowflakes"));
-const Rain = lazy(() => import("../components/rain"));
-const Leaves = lazy(() => import("../components/leaves"));
+import { useState, useCallback, useMemo, useEffect } from "react";
+import Snowflakes from "../components/snowflakes";
+import Rain from "../components/rain";
+import Leaves from "../components/leaves";
 
 type WeatherType = "snow" | "rain" | "leaves";
 
@@ -21,7 +19,6 @@ export default function Effects() {
         return (savedWeather as WeatherType) ?? "snow";
     });
 
-    // Preload background images for smoother transitions
     useEffect(() => {
         Object.values(BACKGROUND_IMAGES).forEach((url) => {
             const img = new Image();
@@ -72,18 +69,9 @@ export default function Effects() {
                 style={{ ...backgroundStyles.leaves, willChange: "opacity" }}
             />
 
-            {/* Weather effects with smooth opacity transitions */}
-            <Suspense fallback={null}>
-                <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "snow" ? "opacity-100" : "opacity-0"} pointer-events-none`} style={{ willChange: "opacity" }}>
-                    <Snowflakes />
-                </div>
-                <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "rain" ? "opacity-100" : "opacity-0"} pointer-events-none`} style={{ willChange: "opacity" }}>
-                    <Rain />
-                </div>
-                <div className={`fixed inset-0 transition-opacity duration-700 ${weatherEffect === "leaves" ? "opacity-100" : "opacity-0"} pointer-events-none`} style={{ willChange: "opacity" }}>
-                    <Leaves />
-                </div>
-            </Suspense>
+            {weatherEffect === "snow" && <Snowflakes />}
+            {weatherEffect === "rain" && <Rain />}
+            {weatherEffect === "leaves" && <Leaves />}
 
             <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-20 flex gap-1.5 sm:gap-2 bg-gray-900/90 p-1.5 sm:p-2 rounded-lg border border-gray-800 shadow-lg">
                 {WEATHER_OPTIONS.map((weather) => (
