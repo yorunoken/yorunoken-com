@@ -75,6 +75,13 @@ export default function Home() {
                             <p className="text-gray-400 leading-relaxed text-center lg:text-left text-sm sm:text-base">
                                 i like collecting plushies, figurines and keychains of anime/japanese characters i like =)
                             </p>
+                            <p className="text-gray-400 leading-relaxed text-center lg:text-left text-sm sm:text-base">
+                                i have type 1 diabetes. you can follow my blood sugar graph from my{" "}
+                                <a className="underline text-blue-400" href="https://nightscout.yorunoken.com" target="_blank" rel="noopener noreferrer">
+                                    nightscout instance
+                                </a>
+                                .
+                            </p>
                             <p className="text-gray-400 leading-relaxed text-center lg:text-left text-sm sm:text-base">trying to navigate through life and complicated feelings.</p>
                         </div>
 
