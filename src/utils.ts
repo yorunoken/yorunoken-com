@@ -23,7 +23,7 @@ export const projects = [
         description: "A fast paced guessing game, made for osu! players, by an osu! player.",
         github: "https://github.com/yorunoken/osu-guessr",
         website: "https://osuguessr.com/",
-        tags: ["Linux", "Arch", "Configuration"],
+        tags: ["osu!", "NextJS", "minigame"],
     },
 ];
 
