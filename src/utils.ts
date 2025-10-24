@@ -19,9 +19,10 @@ export const projects = [
         tags: ["URL Shortener", "Web Service"],
     },
     {
-        title: "dotfiles",
-        description: "My dotfiles for my Arch Linux setup.",
-        github: "https://github.com/yorunoken/dotfiles",
+        title: "osu!guessr",
+        description: "A fast paced guessing game, made for osu! players, by an osu! player.",
+        github: "https://github.com/yorunoken/osu-guessr",
+        website: "https://osuguessr.com/",
         tags: ["Linux", "Arch", "Configuration"],
     },
 ];
