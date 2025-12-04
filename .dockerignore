@@ -1,3 +1,9 @@
 node_modules
 .git
-.env*
+.env
+.DS_Store
+dist
+coverage
+Dockerfile
+compose.yml
+README.md
