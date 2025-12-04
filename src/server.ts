@@ -8,7 +8,7 @@ function cloudflareGenerator(req: Request) {
     return ip;
 }
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ?? 3000;
 const app = new Elysia()
     .use(rateLimiter)
     .get("/api/health", function () {
