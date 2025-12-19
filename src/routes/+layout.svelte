@@ -5,5 +5,12 @@
 	let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+	<script
+		defer
+		src="https://umami.yorunoken.com/script.js"
+		data-website-id="de3aa471-a055-45e5-ae3e-e4521b6746b5"
+	></script>
+	<link rel="icon" href={favicon} />
+</svelte:head>
 {@render children()}
