@@ -1,12 +1,23 @@
 use std::net::SocketAddr;
 
-use axum::Router;
-use tower_http::services::{ServeDir, ServeFile};
+use axum::{
+    handler::HandlerWithoutStateExt,
+    http::StatusCode,
+    response::{Html, IntoResponse},
+    Router,
+};
+use tower_http::services::ServeDir;
+
+async fn not_found() -> impl IntoResponse {
+    let html = tokio::fs::read_to_string("./frontend/dist/index.html")
+        .await
+        .unwrap_or_else(|_| "Not Found".to_string());
+    (StatusCode::NOT_FOUND, Html(html))
+}
 
 #[tokio::main]
 async fn main() {
-    let serve_dir = ServeDir::new("./frontend/dist")
-        .not_found_service(ServeFile::new("./frontend/dist/index.html"));
+    let serve_dir = ServeDir::new("./frontend/dist").not_found_service(not_found.into_service());
 
     let app = Router::new().nest_service("/", serve_dir);
 
