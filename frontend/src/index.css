@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Geist Sans", system-ui, sans-serif;
+    --font-mono: "Geist Mono", monospace;
+}
+
+:root {
+    body {
+        background-color: #171717;
+        color: white;
+    }
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.animate-cursor-blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes titleFocusIn {
+    0% {
+        filter: blur(5px);
+        opacity: 0;
+        letter-spacing: 0.18em;
+        transform: translateY(2px);
+    }
+    35% {
+        opacity: 1;
+    }
+    100% {
+        filter: blur(0);
+        opacity: 1;
+        letter-spacing: 0;
+        transform: translateY(0);
+    }
+}
+
+.title-resolve {
+    animation: titleFocusIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    will-change: filter, opacity, letter-spacing, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .title-resolve {
+        animation: none;
+    }
+}
