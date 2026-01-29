@@ -1,0 +1,18 @@
+.git
+.github
+
+# Rust
+/target
+**/*.rlib
+
+# Frontend
+/frontend/node_modules
+/frontend/dist
+
+# Editor / OS
+**/.DS_Store
+**/*.log
+
+# Secrets
+.env
+.env.*
