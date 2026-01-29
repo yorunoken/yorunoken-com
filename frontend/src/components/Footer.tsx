@@ -11,16 +11,16 @@ export default function Footer() {
                     <a href={`https://github.com/${github}`} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         GitHub
                     </a>
-                    <a href={`https://twitter.com/${twitter}`} className="hover:text-white hover:underline underline-offset-4 transition-all">
+                    <a href={`https://twitter.com/${twitter}`} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         Twitter
                     </a>
-                    <a href={`https://youtube.com/${youtube}`} className="hover:text-white hover:underline underline-offset-4 transition-all">
+                    <a href={`https://youtube.com/${youtube}`} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         Youtube
                     </a>
-                    <a href={`https://osu.ppy.sh/${osu}`} className="hover:text-white hover:underline underline-offset-4 transition-all">
+                    <a href={`https://osu.ppy.sh/u/${osu}`} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         osu!
                     </a>
-                    <a href={donation} className="hover:text-white hover:underline underline-offset-4 transition-all">
+                    <a href={donation} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         Donate
                     </a>
                 </div>
