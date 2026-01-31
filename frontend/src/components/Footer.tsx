@@ -1,4 +1,4 @@
-import { donation, email, github, osu, twitter, youtube } from "../lib/constants";
+import { email, github, osu, twitter, youtube } from "../lib/constants";
 
 export default function Footer() {
     return (
@@ -19,9 +19,6 @@ export default function Footer() {
                     </a>
                     <a href={`https://osu.ppy.sh/u/${osu}`} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
                         osu!
-                    </a>
-                    <a href={donation} target="_blank" rel="noreferrer" className="hover:text-white hover:underline underline-offset-4 transition-all">
-                        Donate
                     </a>
                 </div>
                 <p className="font-mono text-xs">© {new Date().getFullYear()}</p>

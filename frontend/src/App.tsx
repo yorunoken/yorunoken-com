@@ -1,5 +1,6 @@
 import About from "./components/About";
 import Projects from "./components/Projects";
+import Donations from "./components/Donations";
 import ResolvingTitle from "./components/ResolvingTitle";
 import Footer from "./components/Footer";
 import Quotes from "./components/Quotes";
@@ -29,6 +30,8 @@ export default function App() {
                 </header>
 
                 <About />
+
+                <Donations />
 
                 <Projects />
 

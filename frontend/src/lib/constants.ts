@@ -9,6 +9,11 @@ export interface Project {
     dates: string;
 }
 
+const Wallets = {
+    Crypto: 0,
+    Link: 1,
+} as const;
+
 export const projects: Array<Project> = [
     {
         title: "osu!guessr",
@@ -56,4 +61,29 @@ export const github = "yorunoken";
 export const twitter = "_yorunoken";
 export const youtube = "@yorunoken";
 export const osu = "17279598";
-export const donation = "https://buymeacoffee.com/yorunoken";
+
+export const wallets = [
+    {
+        type: Wallets.Crypto,
+        name: "SOL",
+        network: "Solana",
+        address: "DjMwRM6DYqsnSmTh6HyPApve19RgQfXoZMiy1eq91db",
+    },
+    {
+        type: Wallets.Crypto,
+        name: "USDT",
+        network: "Tron/TRC20",
+        address: "TXFSDrnetheBp6ASQBNWDFmBvehKV8gKZz",
+    },
+    {
+        type: Wallets.Crypto,
+        name: "LTC",
+        network: "Litecoin",
+        address: "ltc1qs38qxaxttfxtwkd86fjcxdu7h395vqs9zsjnln",
+    },
+    {
+        type: Wallets.Link,
+        name: "Buy Me a Coffee",
+        link: "https://buymeacoffee.com/yorunoken",
+    },
+];
