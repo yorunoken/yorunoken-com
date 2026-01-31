@@ -11,7 +11,7 @@ export default function About() {
                 <div className="md:col-span-2">
                     <div className="leading-relaxed space-y-2 text-zinc-300">
                         <p>Hi everyone! I'm yorunoken, a full stack engineer who builds and maintains cool projects.</p>
-                        <p>I like spending my free time listening to music, playin video games and reading.</p>
+                        <p>I like spending my free time listening to music, playing video games and reading.</p>
                         <p>
                             I have type 1 diabetes. I have my own{" "}
                             <a className="text-blue-300" href="https://nightscout.yorunoken.com" target="_blank" rel="noopener noreferrer">
